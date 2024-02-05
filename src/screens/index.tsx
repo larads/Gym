@@ -1,10 +1,11 @@
 import { VStack, Image, Text, Center, View, Heading} from "native-base"
 import { MaterialIcons } from '@expo/vector-icons';
 import BackgroundImg  from "@assets/background.png"
+import { Input } from "@components/Input";
 
 export function SignIn() {
     return(
-        <VStack flex={1} bg="gray.700">
+        <VStack flex={1} bg="gray.700" px={10}>
             <Image 
                 source={BackgroundImg} 
                 alt=""
