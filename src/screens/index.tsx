@@ -2,6 +2,7 @@ import { VStack, Image, Text, Center, View, Heading} from "native-base"
 import { MaterialIcons } from '@expo/vector-icons';
 import BackgroundImg  from "@assets/background.png"
 import { Input } from "@components/Input";
+import { Button } from "@components/Button";
 
 export function SignIn() {
     return(
@@ -38,6 +39,9 @@ export function SignIn() {
                 secureTextEntry
             />
 
+            <Button title="Acessar"/>
+
+            <Button title="Criar Conta" variant="outline" />
         </VStack>
     )
 }
