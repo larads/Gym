@@ -3,13 +3,21 @@ import { MaterialIcons } from '@expo/vector-icons';
 import BackgroundImg  from "@assets/background.png"
 import { Input } from "@components/Input";
 import { Button } from "@components/Button";
+import { useNavigation } from "@react-navigation/native";
 
 export function SignIn() {
+    const navigation = useNavigation()
+
+    function handleNewAccount(){
+        navigation.navigate('SingUp')
+    }
+
     return(
         <ScrollView contentContainerStyle={{flexGrow: 1}} showsVerticalScrollIndicator={false}>
             <VStack flex={1} bg="gray.700" px={10} pb={20}>
                 <Image 
                     source={BackgroundImg} 
+                    defaultSource={BackgroundImg}
                     alt=""
                     resizeMode="contain"
                     position="absolute"
@@ -45,7 +53,12 @@ export function SignIn() {
                     <Text color="gray.100" fontSize="sm" mb={3} fontFamily="body">
                         Ainda não tem acesso?
                     </Text>
-                    <Button title="Criar Conta" variant="outline" />
+
+                    <Button 
+                        title="Criar Conta"
+                        variant="outline"
+                        onPress={handleNewAccount}
+                    />
                 </Center>
             </VStack>
         </ScrollView>
