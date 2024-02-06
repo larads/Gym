@@ -1,11 +1,14 @@
 import { Group } from '@components/Group'
-import { HomeHeader } from '@components/HomeHeader'
-import { FlatList, HStack, VStack } from 'native-base'
+import { FlatList, HStack, Heading, VStack, Text} from 'native-base'
 import { useState } from 'react'
+
+import { HomeHeader } from '@components/HomeHeader'
+import { ExerciseCard } from '@components/ExerciseCard'
 
 export function Home() {
     const [groupSelected, setGroupSelected] = useState('costas')
     const [groups, setGroups] = useState(['costas', 'Bíceps', 'Tríceps', 'ombro'])
+    const [exercises, setExercises] = useState(['Puxada frontal','Remada curvada', 'Remada unilateral', 'Levantamento terras'])
     
     return(
         <VStack flex={1}>
