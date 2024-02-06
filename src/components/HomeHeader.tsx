@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Text, HStack, Heading, VStack, Center } from "native-base";
+import { Text, HStack, Heading, VStack } from "native-base";
 import { TouchableOpacity } from "react-native";
 import { UserPhoto } from "./UserPhoto";
 
