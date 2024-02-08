@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { Heading,Center, ScrollView, Skeleton, VStack, Text} from 'native-base'
+import * as ImagePicker from 'expo-image-picker'
 
 import { Button } from '@components/Button'
 import { Input } from '@components/Input'
@@ -9,6 +10,23 @@ import { UserPhoto } from '@components/UserPhoto'
 
 export function Profile() {
     const [loading, setLoading] = useState(false)
+    const [userPhoto, setUserPhoto] = useState('http://github.com/larads.png')
+
+    async function handleUserPhotoSelect() {
+        const photoSelected = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            quality: 1,
+            aspect: [4, 4],
+            allowsEditing: true
+        })
+        console.log(photoSelected)
+
+        if(photoSelected.canceled) {
+            return;
+        }
+        setUserPhoto(photoSelected.assets[0].uri)
+    }
+
     return(
         <VStack flex={1}>
             <ScreenHeader title='Perfil'/>
@@ -22,12 +40,12 @@ export function Profile() {
                                 startColor={'green.200'} 
                                 endColor={'green.500'}/>
                         : <UserPhoto
-                            source={{ uri: 'http://github.com/larads.png'}} 
+                            source={{ uri: userPhoto}} 
                             alt=''
                             size={33}
                         />
                     }
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={handleUserPhotoSelect}>
                         <Text color="green.500" fontWeight="bold" fontSize="md" mt={2} mb={8}>
                             Alterar Foto
                         </Text>
