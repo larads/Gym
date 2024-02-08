@@ -1,17 +1,18 @@
+import { useState } from 'react'
+import { TouchableOpacity } from 'react-native'
+import { Heading,Center, ScrollView, Skeleton, VStack, Text} from 'native-base'
+
 import { Button } from '@components/Button'
 import { Input } from '@components/Input'
 import { ScreenHeader } from '@components/ScreenHeader'
 import { UserPhoto } from '@components/UserPhoto'
-import { Heading,Center, ScrollView, Skeleton, VStack, Text} from 'native-base'
-import { useState } from 'react'
-import { TouchableOpacity } from 'react-native'
 
 export function Profile() {
     const [loading, setLoading] = useState(false)
     return(
         <VStack flex={1}>
             <ScreenHeader title='Perfil'/>
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ paddingBottom: 15}}>
                 <Center mt={6} px={10}>
                     {
                         loading ?
