@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { Heading,Center, ScrollView, Skeleton, VStack, Text} from 'native-base'
 import * as ImagePicker from 'expo-image-picker'
+import * as FileSystem from 'expo-file-system'
 
 import { Button } from '@components/Button'
 import { Input } from '@components/Input'
@@ -28,6 +29,8 @@ export function Profile() {
             }
 
             if (userPhoto.uri) {
+                const photoInfo = await FileSystem.getInfoAsync(userPhoto.uri)
+                
                 setUserPhoto(userPhoto.uri)
             }
             setUserPhoto(photoSelected.assets[0].uri)
