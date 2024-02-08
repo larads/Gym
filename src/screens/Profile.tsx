@@ -13,18 +13,29 @@ export function Profile() {
     const [userPhoto, setUserPhoto] = useState('http://github.com/larads.png')
 
     async function handleUserPhotoSelect() {
-        const photoSelected = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            quality: 1,
-            aspect: [4, 4],
-            allowsEditing: true
-        })
-        console.log(photoSelected)
+        setLoading(true)
+        try {
+            const photoSelected = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                quality: 1,
+                aspect: [4, 4],
+                allowsEditing: true
+            })
+            console.log(photoSelected)
+            
+            if(photoSelected.canceled) {
+                return;
+            }
 
-        if(photoSelected.canceled) {
-            return;
+            if (userPhoto.uri) {
+                setUserPhoto(userPhoto.uri)
+            }
+            setUserPhoto(photoSelected.assets[0].uri)
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setLoading(false)
         }
-        setUserPhoto(photoSelected.assets[0].uri)
     }
 
     return(
