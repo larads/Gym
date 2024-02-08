@@ -21,7 +21,7 @@ export function HomeHeader() {
             </VStack>
 
             <TouchableOpacity>
-                <Ionicons name="exit-outline" size={30} color="gray.100" />
+                <Ionicons name="exit-outline" size={30} color="#00B37E" />
             </TouchableOpacity>
         </HStack>
     )

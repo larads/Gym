@@ -3,7 +3,7 @@ import { HStack, Heading, VStack, Text } from "native-base";
 export function HistoryCard() {
     return(
         <HStack w="full" px={5} py={4} mb={3} bg="gray.600" rounded="md" justifyContent="space-around" alignItems="center">
-            <VStack mr={5}>
+            <VStack mr={5} flex={1}>
                 <Heading color="white" fontSize="md" textTransform="capitalize">
                     Costas
                 </Heading>
