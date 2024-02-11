@@ -16,7 +16,7 @@ type FormProps = {
 
 export function SingUp() {
     const navigation = useNavigation()
-    const { control, handleSubmit} = useForm<FormProps>()
+    const { control, handleSubmit, formState: {errors}} = useForm<FormProps>()
 
     function handleGoBack() {
         navigation.goBack();
@@ -53,6 +53,9 @@ export function SingUp() {
                     <Controller 
                         control={control}
                         name="name"
+                        rules={{
+                            required: 'Informe o nome'
+                        }}
                         render={({ field: { onChange, value } }) => (
                         <Input 
                             placeholder="Nome"
@@ -61,10 +64,18 @@ export function SingUp() {
                         />
                         )}
                     />
+                    <Text color={'red.500'}>{errors.name?.message }</Text>
 
                     <Controller 
                         control={control}
                         name="email"
+                        rules={{
+                            required: 'Informe E-mail',
+                            pattern: {
+                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                message: 'E-mail Inválido'
+                            }
+                        }}
                         render={({ field: { onChange, value } }) => (
                         <Input 
                             placeholder="E-mail"
@@ -75,10 +86,14 @@ export function SingUp() {
                         />
                         )}
                     /> 
+                    <Text color={'red.500'}>{errors.email?.message }</Text>
 
                     <Controller 
                         control={control}
-                        name="name"
+                        name="password"
+                        rules={{
+                            required: 'Informe uma Senha!'
+                        }}
                         render={({ field: { onChange, value } }) => (
                         <Input 
                             placeholder="Senha"
@@ -88,10 +103,15 @@ export function SingUp() {
                         />
                         )}
                     />
+                    <Text color={'red.500'}>{errors.password?.message }</Text>
+
 
                     <Controller 
                         control={control}
                         name="passwordConfirm"
+                        rules={{
+                            required: 'Confime a Senha!'
+                        }}
                         render={({ field: { onChange, value } }) => (
                         <Input 
                             placeholder="Confirmar a Senha"
@@ -102,7 +122,9 @@ export function SingUp() {
                             returnKeyLabel="send"
                         />
                         )}
-                    /> 
+                    />
+                    <Text color={'red.500'}>{errors.passwordConfirm?.message }</Text>
+
 
                     <Button 
                         title="Criar e Acessar"
