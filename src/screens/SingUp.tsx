@@ -16,15 +16,16 @@ type FormProps = {
 
 export function SingUp() {
     const navigation = useNavigation()
-    const { control } = useForm()
+    const { control, handleSubmit} = useForm<FormProps>()
 
     function handleGoBack() {
         navigation.goBack();
     }
 
-    function handleSignUp() {
-
+    function handleSignUp({name, email, password, passwordConfirm}: FormProps) {
+        console.log({ name, email, password, passwordConfirm})
       }
+      
     return(
         <ScrollView contentContainerStyle={{flexGrow: 1}} showsVerticalScrollIndicator={false}>
             <VStack flex={1} bg="gray.700" px={10} pb={20}>
@@ -77,7 +78,7 @@ export function SingUp() {
 
                     <Controller 
                         control={control}
-                        name="password"
+                        name="name"
                         render={({ field: { onChange, value } }) => (
                         <Input 
                             placeholder="Senha"
@@ -97,13 +98,15 @@ export function SingUp() {
                             secureTextEntry
                             onChangeText={onChange}
                             value={value}
+                            onSubmitEditing={handleSubmit(handleSignUp)}
+                            returnKeyLabel="send"
                         />
                         )}
                     /> 
 
                     <Button 
                         title="Criar e Acessar"
-                        onPress={handleSignUp}                    
+                        onPress={handleSubmit(handleSignUp)}                    
                     />
                 </Center>
 

@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { SignIn } from "@screens/SingIn";
-import { SingUp } from "@screens/SinUp";
+import { SingUp } from "@screens/SingUp";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
