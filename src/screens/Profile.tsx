@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { TouchableOpacity } from 'react-native'
-import { Heading,Center, ScrollView, Skeleton, VStack, Text} from 'native-base'
+import { Heading,Center, ScrollView, Skeleton, VStack, Text, useToast} from 'native-base'
 import * as ImagePicker from 'expo-image-picker'
 import * as FileSystem from 'expo-file-system'
 
@@ -13,27 +13,38 @@ export function Profile() {
     const [loading, setLoading] = useState(false)
     const [userPhoto, setUserPhoto] = useState('http://github.com/larads.png')
 
+    const toast = useToast();
+
     async function handleUserPhotoSelect() {
         setLoading(true)
         try {
-            const photoSelected = await ImagePicker.launchImageLibraryAsync({
+            const userPhoto = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                 quality: 1,
                 aspect: [4, 4],
                 allowsEditing: true
             })
-            console.log(photoSelected)
+            console.log(userPhoto);
             
-            if(photoSelected.canceled) {
+            if(userPhoto.canceled) {
                 return;
             }
-
+    
             if (userPhoto.uri) {
-                const photoInfo = await FileSystem.getInfoAsync(userPhoto.uri)
+
+                const photoInfo = await FileSystem.getInfoAsync(userPhoto.uri);
+    
+                if(photoInfo.exists && photoInfo.size && (photoInfo.size / 1024 /1024 ) > 2) {
+                    return toast.show({
+                        title: 'Essa Imagem é muito grande. Escolha uma de até 5MB.',
+                        placement: 'top',
+                        bgColor: 'red.500'
+                    })
+                }
+                console.error('ddd',photoInfo)
                 
                 setUserPhoto(userPhoto.uri)
             }
-            setUserPhoto(photoSelected.assets[0].uri)
         } catch (error) {
             console.log(error)
         } finally {
@@ -64,6 +75,7 @@ export function Profile() {
                             Alterar Foto
                         </Text>
                     </TouchableOpacity>
+                    
                     <Input
                         placeholder="Nome"
                         bg="gray.600"
