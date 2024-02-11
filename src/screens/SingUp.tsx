@@ -3,6 +3,8 @@ import BackgroundImg  from "@assets/background.png"
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
+import * as yup from 'yup'
+import { yupResolver } from "@hookform/resolvers/yup"
 
 import { Input } from "@components/Input";
 import { Button } from "@components/Button";
@@ -14,9 +16,18 @@ type FormProps = {
     passwordConfirm: string;
 }
 
+const SchemaValidation = yup.object({
+    name: yup.string().required('Informe o Nome'),
+    email: yup.string().required('Informe o E-mail').email('E-mail Invalido'),
+    password: yup.string().required('Informe sua Senha!').min(6,'A senha deve ter pelo menos 6 dígitos'),
+    passwordConfirm: yup.string().required('Confirme sua Senha!').oneOf([yup.ref('password'), null], 'Senha Não Confere'),
+})
+
 export function SingUp() {
     const navigation = useNavigation()
-    const { control, handleSubmit, formState: {errors}} = useForm<FormProps>()
+    const { control, handleSubmit, formState: {errors}} = useForm<FormProps>({
+        resolver: yupResolver(SchemaValidation)
+    })
 
     function handleGoBack() {
         navigation.goBack();
@@ -53,9 +64,6 @@ export function SingUp() {
                     <Controller 
                         control={control}
                         name="name"
-                        rules={{
-                            required: 'Informe o nome'
-                        }}
                         render={({ field: { onChange, value } }) => (
                         <Input 
                             placeholder="Nome"
@@ -69,13 +77,6 @@ export function SingUp() {
                     <Controller 
                         control={control}
                         name="email"
-                        rules={{
-                            required: 'Informe E-mail',
-                            pattern: {
-                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                message: 'E-mail Inválido'
-                            }
-                        }}
                         render={({ field: { onChange, value } }) => (
                         <Input 
                             placeholder="E-mail"
@@ -91,9 +92,6 @@ export function SingUp() {
                     <Controller 
                         control={control}
                         name="password"
-                        rules={{
-                            required: 'Informe uma Senha!'
-                        }}
                         render={({ field: { onChange, value } }) => (
                             <Input 
                                 placeholder="Senha"
@@ -109,9 +107,6 @@ export function SingUp() {
                     <Controller 
                         control={control}
                         name="passwordConfirm"
-                        rules={{
-                            required: 'Confime a Senha!'
-                        }}
                         render={({ field: { onChange, value } }) => (
                             <Input 
                                 placeholder="Confirmar a Senha"
