@@ -1,19 +1,38 @@
 import { ScrollView, VStack, Image, Center, View, Heading, Text} from "native-base";
 import BackgroundImg  from "@assets/background.png"
-import { Input } from "@components/Input";
-import { Button } from "@components/Button";
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 
+import { Input } from "@components/Input";
+import { Button } from "@components/Button";
+import { useState } from "react";
 
+type FormProps = {
+    name: string;
+    email: string;
+    password: string;
+    passwordConfirm: string;
+}
 
 export function SingUp() {
+    const [name, setName] = useState('')
+    const [email,setEmail] = useState('')
+    const [password,setPassword] = useState('')
+    const [passwordConfirm,setPasswordConfirm] = useState('')
     const navigation = useNavigation()
 
     function handleGoBack() {
         navigation.goBack();
     }
 
+    function handleSignUp() {
+        console.log({
+          name,
+          email,
+          password,
+          passwordConfirm
+        });
+      }
     return(
         <ScrollView contentContainerStyle={{flexGrow: 1}} showsVerticalScrollIndicator={false}>
             <VStack flex={1} bg="gray.700" px={10} pb={20}>
@@ -34,6 +53,7 @@ export function SingUp() {
                 </Center>
 
                 <Center my={22}>
+                    <Text color={'white'}>Crie sua conta</Text>
                     <Input 
                         placeholder="Nome"
                     />
@@ -42,14 +62,25 @@ export function SingUp() {
                         placeholder="E-mail"
                         keyboardType="email-address"
                         autoCapitalize="none"
+                        onChangeText={setEmail}
                     />
 
                     <Input 
                         placeholder="Senha"
                         secureTextEntry
+                        onChangeText={setPassword}
                     />
 
-                    <Button title="Criar e Acessar" />
+                    <Input 
+                        placeholder="Confirmar a Senha"
+                        secureTextEntry
+                        onChangeText={setPasswordConfirm}
+                    />
+
+                    <Button 
+                        title="Criar e Acessar"
+                        onPress={handleSignUp}                    
+                    />
                 </Center>
 
                 <Button
