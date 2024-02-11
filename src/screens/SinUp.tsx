@@ -2,10 +2,10 @@ import { ScrollView, VStack, Image, Center, View, Heading, Text} from "native-ba
 import BackgroundImg  from "@assets/background.png"
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
+import { useForm, Controller } from "react-hook-form";
 
 import { Input } from "@components/Input";
 import { Button } from "@components/Button";
-import { useState } from "react";
 
 type FormProps = {
     name: string;
@@ -15,23 +15,15 @@ type FormProps = {
 }
 
 export function SingUp() {
-    const [name, setName] = useState('')
-    const [email,setEmail] = useState('')
-    const [password,setPassword] = useState('')
-    const [passwordConfirm,setPasswordConfirm] = useState('')
     const navigation = useNavigation()
+    const { control } = useForm()
 
     function handleGoBack() {
         navigation.goBack();
     }
 
     function handleSignUp() {
-        console.log({
-          name,
-          email,
-          password,
-          passwordConfirm
-        });
+
       }
     return(
         <ScrollView contentContainerStyle={{flexGrow: 1}} showsVerticalScrollIndicator={false}>
@@ -53,29 +45,61 @@ export function SingUp() {
                 </Center>
 
                 <Center my={22}>
-                    <Text color={'white'}>Crie sua conta</Text>
-                    <Input 
-                        placeholder="Nome"
+                    <Heading color="gray.100" fontSize="xl" mb={6} fontFamily="heading">
+                        Crie sua conta
+                    </Heading>
+
+                    <Controller 
+                        control={control}
+                        name="name"
+                        render={({ field: { onChange, value } }) => (
+                        <Input 
+                            placeholder="Nome"
+                            onChangeText={onChange}
+                            value={value}
+                        />
+                        )}
                     />
 
-                    <Input 
-                        placeholder="E-mail"
-                        keyboardType="email-address"
-                        autoCapitalize="none"
-                        onChangeText={setEmail}
+                    <Controller 
+                        control={control}
+                        name="email"
+                        render={({ field: { onChange, value } }) => (
+                        <Input 
+                            placeholder="E-mail"
+                            keyboardType="email-address"
+                            autoCapitalize="none"
+                            onChangeText={onChange}
+                            value={value}
+                        />
+                        )}
+                    /> 
+
+                    <Controller 
+                        control={control}
+                        name="password"
+                        render={({ field: { onChange, value } }) => (
+                        <Input 
+                            placeholder="Senha"
+                            secureTextEntry
+                            onChangeText={onChange}
+                            value={value}
+                        />
+                        )}
                     />
 
-                    <Input 
-                        placeholder="Senha"
-                        secureTextEntry
-                        onChangeText={setPassword}
-                    />
-
-                    <Input 
-                        placeholder="Confirmar a Senha"
-                        secureTextEntry
-                        onChangeText={setPasswordConfirm}
-                    />
+                    <Controller 
+                        control={control}
+                        name="passwordConfirm"
+                        render={({ field: { onChange, value } }) => (
+                        <Input 
+                            placeholder="Confirmar a Senha"
+                            secureTextEntry
+                            onChangeText={onChange}
+                            value={value}
+                        />
+                        )}
+                    /> 
 
                     <Button 
                         title="Criar e Acessar"
