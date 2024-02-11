@@ -61,10 +61,10 @@ export function SingUp() {
                             placeholder="Nome"
                             onChangeText={onChange}
                             value={value}
+                            errorMessage={errors.name?.message}
                         />
                         )}
                     />
-                    <Text color={'red.500'}>{errors.name?.message }</Text>
 
                     <Controller 
                         control={control}
@@ -83,10 +83,10 @@ export function SingUp() {
                             autoCapitalize="none"
                             onChangeText={onChange}
                             value={value}
+                            errorMessage={errors.email?.message}
                         />
                         )}
                     /> 
-                    <Text color={'red.500'}>{errors.email?.message }</Text>
 
                     <Controller 
                         control={control}
@@ -95,16 +95,16 @@ export function SingUp() {
                             required: 'Informe uma Senha!'
                         }}
                         render={({ field: { onChange, value } }) => (
-                        <Input 
-                            placeholder="Senha"
-                            secureTextEntry
-                            onChangeText={onChange}
-                            value={value}
-                        />
+                            <Input 
+                                placeholder="Senha"
+                                secureTextEntry
+                                onChangeText={onChange}
+                                value={value}
+                                errorMessage={errors.password?.message}
+
+                            />
                         )}
                     />
-                    <Text color={'red.500'}>{errors.password?.message }</Text>
-
 
                     <Controller 
                         control={control}
@@ -113,18 +113,17 @@ export function SingUp() {
                             required: 'Confime a Senha!'
                         }}
                         render={({ field: { onChange, value } }) => (
-                        <Input 
-                            placeholder="Confirmar a Senha"
-                            secureTextEntry
-                            onChangeText={onChange}
-                            value={value}
-                            onSubmitEditing={handleSubmit(handleSignUp)}
-                            returnKeyLabel="send"
-                        />
+                            <Input 
+                                placeholder="Confirmar a Senha"
+                                secureTextEntry
+                                onChangeText={onChange}
+                                value={value}
+                                errorMessage={errors.passwordConfirm?.message}
+                                onSubmitEditing={handleSubmit(handleSignUp)}
+                                returnKeyLabel="send"
+                            />
                         )}
                     />
-                    <Text color={'red.500'}>{errors.passwordConfirm?.message }</Text>
-
 
                     <Button 
                         title="Criar e Acessar"
